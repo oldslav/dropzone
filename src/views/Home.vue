@@ -1,8 +1,14 @@
 <template>
 	<div>
 		<dropzone-component></dropzone-component>
-		<div v-for="(file, key) in fileState.files" v-bind:key="key">
-			<p>{{ file.name }}</p>
+		<!--<div v-for="(file, key) in fileState.files" v-bind:key="key">-->
+		<!--<p>{{ file.name }}</p>-->
+		<!--</div>-->
+		<button @click="show">Click</button>
+		<div class="flex_container">
+			<div v-for="(file, key) in fileState.files" v-bind:key="key" class="preview_container">
+				<p>{{ file.name }}</p>
+			</div>
 		</div>
 	</div>
 </template>
@@ -16,9 +22,11 @@
         components: {DropzoneComponent},
     })
     export default class Home extends Vue {
-        // @Provide() public files: any = [];
-
         @State('files')
         public fileState!: any;
+
+        public show() {
+            console.log(this.fileState.files);
+        }
     }
 </script>
