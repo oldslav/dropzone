@@ -5,29 +5,34 @@
         <span>Drag Here</span>
       </form>
     </div>
-    <div v-for="(file, key) in files" v-bind:key="key">
+    <!-- <dropzone-component></dropzone-component> -->
+    <div v-for="(file, key) in fileState.files" v-bind:key="key">
       <p>{{ file.name }}</p>
     </div>
-    <button @click="output">Click</button>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Provide } from 'vue-property-decorator';
-
+import DropzoneComponent from '@/components/Dropzone.vue';
+import { State, Mutation } from 'vuex-class';
 @Component({
+  components: { DropzoneComponent },
 })
 export default class Home extends Vue {
-  @Provide() public files: any = [];
+  // @Provide() public files: any = [];
+
+  @State('files')
+  public fileState!: any;
+
+  @Mutation('addFile')
+  public appendFile: any;
+
   @Provide() public dragAndDropCapable: any = false;
 
   public $refs!: {
     fileform: HTMLFormElement,
   };
-
-  public output() {
-    console.log(this.files);
-  }
 
   public determineDragAndDropCapable() {
     const div = document.createElement('div');
@@ -53,7 +58,7 @@ export default class Home extends Vue {
 
       this.$refs.fileform.addEventListener('drop', (e: any) => {
         for (let i = 0; i < e.dataTransfer.files.length; i++) {
-          this.files.push(e.dataTransfer.files[i]);
+          this.appendFile(e.dataTransfer.files[i]);
         }
       });
     }
