@@ -35,7 +35,7 @@
                 if (/\.(jpe?g|png)$/i.test(file.name)) {
                     const reader = new FileReader();
                     reader.readAsDataURL(file);
-                    reader.onload = (a) => {
+                    reader.onload = () => {
                         payload.preview = reader.result;
                     };
                 }
