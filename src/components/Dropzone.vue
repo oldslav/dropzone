@@ -8,17 +8,38 @@
 <script lang="ts">
     import {Vue, Component, Provide} from 'vue-property-decorator';
     import {Mutation} from 'vuex-class';
+    import IFile from '@/domain/interfaces/IFile';
 
     @Component
     export default class Dropzone extends Vue {
         @Mutation('addFile')
         public appendFile: any;
 
+        private publicPath: any = process.env.BASE_URL;
+
         public onDrop(e: any) {
             e.preventDefault();
             e.stopPropagation();
+
             for (let i = 0; i < e.dataTransfer.files.length; i++) {
-                this.appendFile(e.dataTransfer.files[i]);
+                const file = e.dataTransfer.files[i];
+                const arr = file.name.split('.');
+
+                const payload: IFile = {
+                    name: arr[0],
+                    extension: arr[1],
+                    size: file.size + ' Bytes',
+                    preview: `${this.publicPath}png/${arr[1]}.png`,
+                };
+
+                if (/\.(jpe?g|png)$/i.test(file.name)) {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = (a) => {
+                        payload.preview = reader.result;
+                    };
+                }
+                this.appendFile(payload);
             }
         }
 

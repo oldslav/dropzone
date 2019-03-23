@@ -12,13 +12,20 @@
 }
 
 .preview_container {
-  display: flex;
+  display: inline-flex;
   height: 170px;
   width: 150px;
   margin: 5px;
-  background: rgba(131,131,131,0.16);
+  //background: rgba(131,131,131,0.16);
+  justify-content: center;
   flex-direction: column;
-  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.preview_container > img {
+  max-height: 70%;
+  max-width: 100%;
 }
 
 .flex_container {
@@ -26,6 +33,5 @@
   margin: auto;
   margin-top: 20px;
   width: 650px;
-  border: black;
   flex-wrap: wrap;
 }
