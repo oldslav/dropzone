@@ -6,7 +6,7 @@ export default class File extends VuexModule {
   public files: any = [];
 
   @Mutation
-  public addFile(file: any) {
+  public addFile(file: IFile) {
     this.files.push(file);
   }
 }
