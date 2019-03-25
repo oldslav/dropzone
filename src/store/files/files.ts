@@ -3,7 +3,7 @@ import IFile from '@/domain/interfaces/IFile';
 
 @Module
 export default class File extends VuexModule {
-  public files: any = [];
+  public files: IFile[] = [];
 
   @Mutation
   public addFile(file: IFile) {
